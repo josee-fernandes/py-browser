@@ -19,6 +19,10 @@ class MainWindow(QMainWindow):
       backButton.triggered.connect(self.browser.back)
       navbar.addAction(backButton)
 
+      forwardButton = QAction('Forward', self)
+      forwardButton.triggered.connect(self.browser.forward)
+      navbar.addAction(forwardButton)
+
 app = QApplication(sys.argv)
 QApplication.setApplicationName('My Cool Browser')
 window = MainWindow()
