@@ -23,6 +23,10 @@ class MainWindow(QMainWindow):
       forwardButton.triggered.connect(self.browser.forward)
       navbar.addAction(forwardButton)
 
+      refreshButton = QAction('Refresh', self)
+      refreshButton.triggered.connect(self.browser.reload)
+      navbar.addAction(refreshButton)
+
 app = QApplication(sys.argv)
 QApplication.setApplicationName('My Cool Browser')
 window = MainWindow()
