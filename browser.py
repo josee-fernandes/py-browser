@@ -3,14 +3,22 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtWebEngineWidgets import *
 
+class BrowserSettings(QWebEnginePage):
+   def userAgentForUrl(self, url):
+      return 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'
+
 class MainWindow(QMainWindow):
    def __init__(self):
       super(MainWindow, self).__init__()
       self.browser = QWebEngineView()
+      self.browser.setPage(BrowserSettings())
       self.browser.setUrl(QUrl('https://google.com'))
+      self.setWindowTitle('Loading ...')
       self.setCentralWidget(self.browser)
       self.showMaximized()
-      
+      self.browser.urlChanged.connect(self.updateUrl)
+      self.browser.titleChanged.connect(self.updateTitle)
+
       # navbar
       navbar = QToolBar()
       self.addToolBar(navbar)
@@ -35,7 +43,8 @@ class MainWindow(QMainWindow):
       self.urlBar.returnPressed.connect(self.navigate)
       navbar.addWidget(self.urlBar)
 
-      self.browser.urlChanged.connect(self.updateUrl)
+      
+
 
    def navigateHome(self):
       self.browser.setUrl(QUrl('https://google.com'))
@@ -47,8 +56,10 @@ class MainWindow(QMainWindow):
    def updateUrl(self, url):
       self.urlBar.setText(url.toString())
 
+   def updateTitle(self, title):
+      self.setWindowTitle(title)
 
 app = QApplication(sys.argv)
-QApplication.setApplicationName('My Cool Browser')
+QApplication.setApplicationName('Elize Browser')
 window = MainWindow()
 app.exec_()
