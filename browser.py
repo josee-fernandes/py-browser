@@ -18,6 +18,7 @@ class MainWindow(QMainWindow):
       self.showMaximized()
       self.browser.urlChanged.connect(self.updateUrl)
       self.browser.titleChanged.connect(self.updateTitle)
+      self.customSettings()
 
       # navbar
       navbar = QToolBar()
@@ -43,9 +44,6 @@ class MainWindow(QMainWindow):
       self.urlBar.returnPressed.connect(self.navigate)
       navbar.addWidget(self.urlBar)
 
-      
-
-
    def navigateHome(self):
       self.browser.setUrl(QUrl('https://google.com'))
 
@@ -58,6 +56,18 @@ class MainWindow(QMainWindow):
 
    def updateTitle(self, title):
       self.setWindowTitle(title)
+
+
+   def customSettings(self):
+      engine = QWebEngineSettings
+      settings = QWebEngineSettings.globalSettings()
+      settings.setAttribute(engine.ScrollAnimatorEnabled, True)
+      settings.setAttribute(engine.PluginsEnabled, True)
+      settings.setAttribute(engine.ScreenCaptureEnabled, True)
+      settings.setAttribute(engine.TouchIconsEnabled, True)
+      settings.setAttribute(engine.AllowRunningInsecureContent, True)
+      settings.setAttribute(engine.AllowWindowActivationFromJavaScript, True)
+      settings.setAttribute(engine.SpatialNavigationEnabled, True)
 
 app = QApplication(sys.argv)
 QApplication.setApplicationName('Elize Browser')
